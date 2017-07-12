@@ -11,6 +11,7 @@ var requestCatalog = function(data) {
 
 
 var onAggregationClick = function(element, aggregation, value) {
+
   var checked = jQuery(element).is(':checked');
   var uri = getUpdatedAggregationsUrl({
     key: aggregation,
@@ -85,4 +86,18 @@ jQuery(document).ready(function() {
     History.back()
     event.preventDefault()
   })
+
+  $(document).on('click', '.aggregation-box', function(event) {
+    //event.preventDefault()
+  })
+
+  $( document ).ajaxError(function( event, request, settings ) {
+
+    if (request.status === 401) {
+      window.location.href = '/login';
+    }
+  });
+
 })
+
+

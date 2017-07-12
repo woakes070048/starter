@@ -1,0 +1,94 @@
+{% extends "basic/layout.html.twig" %}
+
+{% block content %}
+<div class="main-container">
+  <div class="container" style="padding-left: 0">
+    <ol class="breadcrumb pull-left">
+      {#<li><a href="/"><i class="icon-home fa"></i></a></li>#}
+      <li><a href="/">Homepage</a></li>
+      <li><a href="/catalog">all items</a></li>
+      <li class="active">{{ row.domain }}</li>
+    </ol>
+    <div class="pull-right">
+      <a href="/catalog" class="previous-page">
+        {#<i class="fa fa-angle-double-left"></i> Back to results#}
+        <i class="fa fa-angle-double-left"></i> Previous page
+      </a>
+    </div>
+  </div>
+  <div class="container" style="padding-left: 0">
+    <div class="row">
+
+      <div class="col-sm-4">
+        <aside>
+          <div class="panel sidebar-panel">
+            <div class="">
+              <div class="panel-body text-center">
+                <div class="">
+                  <img src="{% if row.image %}{{ row.image }}{% else %}{{ image }}{% endif %}" alt="{{ row.name }}" style="width: 300px" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+
+
+      <div class="col-sm-8">
+        <div class="">
+          <h1 style="margin-bottom: 5px;">{{ row.domain }}</h1>
+          <span class="text-left text-muted">
+            {{ row.meta_title }}
+          </span>
+
+          <hr class="clearfix">
+
+          <div class="">
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-striped">
+                  <tbody>
+
+                  <tr>
+                    <td><b>Domain</b></td>
+                    <td>
+                      <a href="{{ row.url }}" target="_blank">{{ row.domain }}</a>
+                    </td>
+                  </tr>
+                </table>
+
+                <pre>
+                {{ row | debug }}
+                </pre>
+
+                <pre>
+                {{ item | debug }}
+                </pre>
+
+
+                <a class="btn btn-default btn-danger" style="width: 100%;" href="/admin/websites/delete/{{ row.domain }}" role="button">Delete ecommerce</a>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block before_body_end %}
+  <script>
+    $('.show-info').popover({
+      delay: 300,
+      placement: 'bottom',
+      trigger: 'hover'
+    })
+  </script>
+{% endblock %}

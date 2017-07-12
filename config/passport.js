@@ -81,6 +81,25 @@ module.exports = function(app) {
     }))
   }
 
+  if (config.auth && config.auth.google && config.auth.google.clientID && config.auth.google.clientSecret) {
+    passport.use(new GoogleStrategy({
+      clientID: config.auth.google.clientID,
+      clientSecret: config.auth.google.clientSecret,
+      callbackURL: config.auth.google.callbackURL,
+      profileFields: config.auth.google.profileFields
+    }, function(accessToken, refreshToken, profile, done) {
+      process.nextTick(function() {
+        userService.updateGoogleUser(accessToken, refreshToken, profile)
+        .then(function(user) {
+          done(null, user)
+        })
+        .catch(function(err) {
+          done(err)
+        })
+      })
+    }))
+  }
+
   if (config.auth && config.auth.linkedin && config.auth.linkedin.clientID && config.auth.linkedin.clientSecret) {
     passport.use(new LinkedinStrategy({
       consumerKey: config.auth.linkedin.clientID,
@@ -150,6 +169,22 @@ module.exports = function(app) {
     return res.redirect(url);
   });
 
+  app.get('/auth/google', function(req, res, next) {
+    if (!config.auth || !config.auth.google || !config.auth.google.clientID || !config.auth.google.clientSecret) {
+      return res.status(500).send('Google Auth is not configured');
+    }
+    return next()
+  }, passport.authenticate('google', {
+    scope: config.auth.google.scope
+  }));
+
+  app.get('/auth/google/callback', passport.authenticate('google', {
+    failureRedirect: '/login'
+  }), function(req, res) {
+    var url = '/'
+    return res.redirect(url);
+  });
+
   app.get('/auth/linkedin', function(req, res, next) {
     if (!config.auth || !config.auth.linkedin || !config.auth.linkedin.clientID || !config.auth.linkedin.clientSecret) {
       return res.status(500).send('Linkedin auth is not configured');
@@ -165,8 +200,6 @@ module.exports = function(app) {
     var url = '/'
     return res.redirect(url);
   });
-
-
 
   app.get('/login', function(req, res) {
     return res.render('general/login');

@@ -1,2 +1,209 @@
-[
-]
+{
+  "name": "jdnunono",
+  "aggregations": {
+    "databases": {
+      "title": "Databases",
+      "field": "databases",
+      "conjunction": true,
+      "size": 15,
+      "type": "terms"
+    },
+    "payment_processors": {
+      "title": "Payment systems",
+      "position": 75,
+      "field": "payment_processors",
+      "conjunction": true,
+      "size": 15,
+      "type": "terms"
+    },
+    "ecommerce": {
+      "title": "Ecommerce",
+      "position": 80,
+      "field": "ecommerce",
+      "conjunction": true,
+      "size": 15,
+      "type": "terms"
+    },
+    "programming_languages": {
+      "title": "Programming languages",
+      "field": "programming_languages",
+      "conjunction": true,
+      "size": 5,
+      "type": "terms"
+    },
+    "javascript_frameworks": {
+      "title": "Javascript",
+      "field": "javascript_frameworks",
+      "conjunction": true,
+      "size": 5,
+      "type": "terms"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "field": "analytics",
+      "conjunction": true,
+      "size": 5,
+      "type": "terms"
+    },
+    "web_servers": {
+      "title": "Web servers",
+      "position": 65,
+      "field": "web_servers",
+      "conjunction": true,
+      "size": 5,
+      "type": "terms"
+    },
+    "social_media": {
+      "title": "Social media",
+      "field": "social_media",
+      "position": 76,
+      "conjunction": true,
+      "size": 15,
+      "type": "terms"
+    },
+    "ltd": {
+      "title": "Country",
+      "position": 100,
+      "field": "ltd",
+      "conjunction": true,
+      "size": 15,
+      "type": "terms"
+    }
+  },
+  "sortings": {
+    "meta_title": {
+      "field": "meta_title",
+      "order": "desc",
+      "type": "normal",
+      "title": "meta_title"
+    },
+    "ltd": {
+      "field": "ltd",
+      "order": "desc",
+      "type": "normal",
+      "title": "ltd"
+    },
+    "country_position": {
+      "field": "country_position",
+      "order": "asc",
+      "type": "normal",
+      "title": "country_position"
+    },
+    "domain": {
+      "field": "domain",
+      "order": "desc",
+      "type": "normal",
+      "title": "domain"
+    }
+  },
+  "defaults": {
+    "sort": "country_position"
+  },
+  "updated_at": "2017-06-24T13:41:30.085Z",
+  "created_at": "2017-06-24T13:41:30.085Z",
+  "slugs": [],
+  "schema": {
+    "databases": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "ecommerce": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "cache_tools": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "payment_processors": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "hosting_panels": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "programming_languages": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "javascript_frameworks": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "analytics": {
+      "store": true,
+      "position": 70,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "font_scripts": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "video_players": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "widgets": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "web_servers": {
+      "store": true,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "meta_title": {
+      "store": true,
+      "type": "string"
+    },
+    "social_media": {
+      "store": true,
+      "position": 55,
+      "index": "not_analyzed",
+      "display": "array",
+      "type": "string"
+    },
+    "ltd": {
+      "store": true,
+      "index": "not_analyzed",
+      "type": "string"
+    },
+    "country_position": {
+      "store": true,
+      "type": "integer"
+    },
+    "image": {
+      "display": "image",
+      "type": "string"
+    },
+    "domain": {
+      "store": true,
+      "type": "string"
+    }
+  }
+}
+

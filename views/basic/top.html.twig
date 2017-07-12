@@ -1,0 +1,50 @@
+{% extends "basic/layout.html.twig" %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <h3>List of popular ecommerce companies in Germany</h3>
+
+
+    <div class="items">
+      {#{% for item in items %}
+      <div class="col-xs-3 col-md-3" style="height: 220px;">
+        <a href="{% if item.permalink %}/item/{{ item.permalink }}{% else %}/id/{{ item.id }}{% endif %}" class="">
+          <img class="img-thumbnail" src="{% if item.image %}{{ item.image }}{% else %}{{ image }} {% endif %}" alt="{{ item.domain }}">
+          <p>{{ item.domain }}</p>
+        </a>
+      </div>
+      {% endfor %}#}
+
+
+      <table class="table table-striped">
+        <tbody>
+
+        {% for item in items %}
+        <tr>
+          <td>
+            <img style="width: 100px;" class="img-thumbnail" src="{% if item.image %}{{ item.image }}{% else %}{{ image }} {% endif %}" alt="{{ item.domain }}">
+          </td>
+          <td>{{ item.domain }}</td>
+          <td>
+            Clothes, Shoes
+          </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
+      <a class="btn btn-default btn-success" style="width: 100%;" href='/?filters={"ltd":["Germany"]}' role="button">See more</a>
+      <br />
+      <br />
+
+    </div>
+
+
+  </div>
+</div>
+
+
+
+{% endblock %}

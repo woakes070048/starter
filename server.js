@@ -39,6 +39,11 @@ itemsapi.init({
 var app = itemsapi.get('express');
 var urlHelper = require('./src/helpers/url');
 var statusHelper = require('./src/helpers/status');
+
+
+const i18n = require('./src/clients/i18n');
+app.use(i18n.init);
+
 var nunenv = require('./src/nunenv')(app, 'views', {
   autoescape: true,
   watch: true,
@@ -66,6 +71,8 @@ app.all('*', function(req, res, next) {
   req.is_installation = true
   req.step = 2
   req.base_url = req.protocol + '://' + req.get('host')
+
+  res.locals.environment = process.env.NODE_ENV;
 
   return configService.getConfig()
   .timeout(2000)
@@ -97,7 +104,7 @@ app.all('*', function(req, res, next) {
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 app.use(cookieParser())
-//app.use(i18n.init);
+
 var RedisStore = require('connect-redis')(session);
 //var passport = require('passport');
 //var LocalStrategy = require('passport-local').Strategy;

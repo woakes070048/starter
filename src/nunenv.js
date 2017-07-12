@@ -31,6 +31,14 @@ module.exports = function(app, path, options) {
     return val;
   })
 
+  .addGlobal('is_url', function(val) {
+    return !!val.match('http');
+  })
+
+  .addGlobal('get_suffix', function(val) {
+    return val.split('.').pop();
+  })
+
   .addGlobal('in_array', function(element, array) {
     array = array || [];
     return array.indexOf(element) !== -1;

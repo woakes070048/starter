@@ -6,45 +6,55 @@
     "logging_level": "info"
   },
   "elasticsearch": {
-    "host": "127.0.0.1:9200",
+    "host": "https://search-shoprank-ubfqt3kpf6yi6mcpcrsrcjsgju.eu-central-1.es.amazonaws.com/",
     "selector": "roundRobin"
   },
   "mongodb": {
-    "uri": "localhost:27017/itemsapi-starter"
+    "uri": "mongodb://ec2-52-58-32-83.eu-central-1.compute.amazonaws.com:27017/shoprank"
+  },
+  "mailjet": {
+    "key": "3cf84c48ec59862633a84b0458415137",
+    "secret": "fb834ac3cdec16a86b8fe6665a8179ed"
   },
   "auth": {
     "memory": {
       "username": "admin",
-      "password": "itemsapi",
+      "password": "Qx@tyx2XCkMS",
       "enabled": true
     },
     "github" : {
-      "clientID" : "",
-      "clientSecret": "",
+      "clientID" : "6192ef9dab63adb9b2d5",
+      "clientSecret": "894b19a0a8cbe9ee47d44f5d29582db27668ce85",
       "scope": ["user:email"],
-      "callbackURL": "http://localhost:4000/auth/github/callback"
+      "callbackURL": "http://shoprank.co/auth/github/callback"
     },
     "linkedin" : {
-      "clientID" : "",
-      "clientSecret": "",
+      "clientID" : "86cx07576tckmo",
+      "clientSecret": "CL9jgC6nkm4lqTMF",
       "scope": ["r_basicprofile", "r_emailaddress"],
       "profileFields": ["id", "first-name", "last-name", "email-address", "headline", "picture-url"],
-      "callbackURL": "http://localhost:4000/auth/linkedin/callback"
+      "callbackURL": "http://shoprank.co/auth/linkedin/callback"
+    },
+    "google" : {
+      "clientID" : "1056051442063-24hka11j5p30nj9vi41ferrfelpuu4ps.apps.googleusercontent.com",
+      "clientSecret": "sescMGNsqkrf8TmAf4ofa39I",
+      "scope": ["profile", "email"],
+      "callbackURL": "http://shoprank.co/auth/google/callback"
     },
     "facebook" : {
-      "clientID" : "",
-      "clientSecret": "",
-      "callbackURL": "http://localhost:4000/auth/facebook/callback",
+      "clientID" : "1289701931142705",
+      "clientSecret": "1ae9959a5f8f0b0c663d61b87c2dd320",
+      "callbackURL": "http://shoprank.co/auth/facebook/callback",
       "scope": ["public_profile", "email"],
       "profileFields": ["id", "displayName", "email", "birthday", "first_name", "last_name", "middle_name", "gender", "link", "picture.type(large)"]
     }
   },
   "redis": {
-    "host": "localhost",
+    "host": "ec2-52-58-32-83.eu-central-1.compute.amazonaws.com",
     "port": 6379,
-    "auth_pass": ""
+    "auth_pass": "redishaslo123456789"
   },
-  "allowed_ips": ["127.0.0.1"],
+  "allowed_ips": ["127.0.0.1", "82.177.94.35", "159.203.163.109", "31.175.189.111", "46.101.134.32"],
   "cookie": {
     "maxAge": 86400000,
     "domain": ""

@@ -13,10 +13,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<title>ItemsAPI starter</title>
+<meta name="description" content="Search engine of shops. Research eCommerce market and analyze competition">
+<title>Search engine for eCommerce shops</title>
 <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-{#<link href="assets/jumbotron.css" rel="stylesheet">#}
 <link href="/assets/navbar.css" rel="stylesheet">
 <link href="/assets/prism.css" rel="stylesheet" />
 <link href="/assets/custom.css" rel="stylesheet" />
@@ -39,14 +38,13 @@
       </button>
       <a class="navbar-brand" href="/"><img style="float: left; margin-right:10px; height: 25px;" src="{{ settings.logo }}" />{{ settings.title }}</a>
     </div>
-
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><a href="/">Home</a></li>
-        {% if not user %}
-        <li><a href="/login">Login</a></li>
-        {% endif %}
+
+
         {% if user %}
+
         <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -56,7 +54,14 @@
           <li><a href="/logout">Logout</a></li>
         </ul>
         </li>
+        {% else %}
+        <li>
+        <a href="/login">
+          <span style="">Login</span>
+        </a>
+        </li>
         {% endif %}
+
       </ul>
     </div>
   </div>
@@ -71,8 +76,18 @@
   </div>
 
   <footer class="text-center">
+    <div id="google_translate_element"></div><script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'cs,da,de,en,es,fr,hr,it,nl,pl,pt,ro,ru,sk,sl,sr,sv,uk', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL, multilanguagePage: true}, 'google_translate_element');
+    }
+    </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <p>System powered by <a href="https://www.itemsapi.com">ItemsAPI</a>. Code licensed under Apache 2.0 | © 2015-2017 </p>
+
+
   </footer>
+
+
 
 </div>
 
@@ -82,7 +97,8 @@
 <script src="/libs/lodash/dist/lodash.min.js"></script>
 <script src="/libs/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
 <script src="/libs/urijs/src/URI.min.js"></script>
-<script src="/assets/script.js"></script>
+<script src="/assets/script.js?v=2"></script>
+<script src="/assets/custom.js?v=2"></script>
 <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
 
 {% if settings.ga_id %}

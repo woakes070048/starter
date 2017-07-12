@@ -9,7 +9,7 @@
         return false;
       },
       select: function( event, ui ) {
-        $(location).attr('href', '/id/' + ui.item.value)
+        $(location).attr('href', '/website/' + ui.item.label)
         console.log( "Selected: " + ui.item.value + " aka " + ui.item.label );
         return false;
       }

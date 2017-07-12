@@ -7,7 +7,7 @@
       {#<li><a href="/"><i class="icon-home fa"></i></a></li>#}
       <li><a href="/">Homepage</a></li>
       <li><a href="/catalog">all items</a></li>
-      <li class="active">{{ item.name }}</li>
+      <li class="active">{{ row.domain }}</li>
     </ol>
     <div class="pull-right">
       <a href="/catalog" class="previous-page">
@@ -25,7 +25,7 @@
             <div class="">
               <div class="panel-body text-center">
                 <div class="">
-                  <img src="{% if item.image %}{{ item.image }}{% else %}{{ image }}{% endif %}" alt="{{ item.name }}" style="width: 300px" />
+                  <img src="{% if row.image %}{{ row.image }}{% else %}{{ image }}{% endif %}" alt="{{ row.name }}" style="width: 300px" />
                 </div>
               </div>
             </div>
@@ -37,9 +37,12 @@
 
       <div class="col-sm-8">
         <div class="">
-          <h1>{{ item.name }}</h1>
-          <span class="" style="margin-bottom: 0;">
+          <h1 style="margin-bottom: 5px;">{{ row.domain }}</h1>
+          <span class="text-left text-muted">
+            {{ row.meta_title }}
           </span>
+
+          <hr class="clearfix">
 
           <div class="">
             <div class="row">
@@ -47,123 +50,303 @@
                 <table class="table table-striped">
                   <tbody>
 
-                  {% for key, val in item %}
                   <tr>
-                    <td><b>{{ key }}</b></td>
+                    <td><b>Domain</b></td>
                     <td>
-                      {{ val }}
-                    </td>
-                    <td>
+                      <a href="{{ row.url }}" target="_blank">{{ row.domain }}</a>
                     </td>
                   </tr>
-                  {% endfor %}
-                  </tbody>
-                </table>
+                  <tr>
+                    <td><b>Country</b></td>
+                    <td>
+                      {{ __('country.' + get_suffix(row.domain)) }}
+                    </td>
+                  </tr>
 
-                {% if settings.hints %}
-                <p class="bg-success" style="padding: 15px;">To change this layout go to: <strong>/views/item.html.twig</strong></p>
+                  {% if row.shop_category %}
+                  <tr>
+                    <td><b>Category</b></td>
+                    <td>
+                      {{ __('category.' + row.shop_category) }}
+                    </td>
+                  </tr>
+                  {% endif %}
+                  <tr>
+                    <td><b>Social media</b></td>
+                    <td>
+                      {#{{ item.social_media }}#}
+                      {% if row.facebook %}<a href="{{ row.facebook }}" target="_blank">Facebook</a>, {% endif %}
+                      {% if row.instagram %}<a href="{{ row.instagram }}" target="_blank">Instagram</a>, {% endif %}
+                      {% if row.twitter %}<a href="{{ row.twitter }}" target="_blank">Twitter</a>, {% endif %}
+                      {% if row.linkedin %}<a href="{{ row.linkedin }}" target="_blank">Linkedin</a>, {% endif %}
+                      {% if row.github %}<a href="{{ row.github }}" target="_blank">Github</a>, {% endif %}
+                      {% if row.youtube %}<a href="{{ row.youtube }}" target="_blank">Youtube</a>, {% endif %}
+                      {% if row.pinterest %}<a href="{{ row.pinterest }}" target="_blank">Pinterest</a>, {% endif %}
+                      {% if row.trustedshops %}<a href="{{ row.trustedshops }}" target="_blank">Trustedshops</a>, {% endif %}
+                    </td>
+                  </tr>
+
+                  {% if row.wappalyzer.ecommerce %}
+                  <tr>
+                    <td><b>Ecommerce</b></td>
+                    <td>
+                      {{ row.wappalyzer.ecommerce.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.analytics %}
+                  <tr>
+                    <td><b>Analytics</b></td>
+                    <td>
+                      {{ row.wappalyzer.analytics.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.jobs %}
+                  <tr>
+                    <td><b>Other</b></td>
+                    <td>
+
+                      <a target="_blank" href="{% if is_url(row.jobs) %}{{ row.jobs }}{% else %}http://{{ row.domain}}{{ row.jobs }}{% endif %}">List of jobs</a>
+
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="">
+            <div class="row">
+              <div class="col-md-12">
+
+
+                <hr class="clearfix" />
+                <h4>Competition and potential partners</h4>
+
+                {% if user %}
+                <a id="order-cta" class="btn btn-default btn-success" style="width: 100%;" role="button">Show European competition and potential partners <i class="glyphicon glyphicon-chevron-right"></i></a>
+                {#<a id="order-cta" class="btn btn-default btn-success" style="width: 100%;" role="button">Show European competition and potential partners <i class="glyphicon glyphicon-menu-right"></i></a>#}
+
+                {% else %}
+                <a class="btn btn-default btn-success" style="width: 100%;" href="/?page=2" role="button">Show European competition and potential partners</a>
                 {% endif %}
 
-
-                <hr class="clearfix" />
-
-                <h4>{{ item.name }} - similar items (by {{ settings.recommendation_field }})</h4>
-
-                <div class="row">
-                {% for element in similar %}
-                  <div class="col-sm-3 col-md-3">
-                    <div class="thumbnail show-info" title="Similar properties" data-content="{{ item[settings.recommendation_field] | intersection(element[settings.recommendation_field]) }}">
-                      <a href="{% if element.permalink %}/item/{{ element.permalink }}{% else %}/id/{{ element.id }}{% endif %}">
-                        <img src="{{ element.image }}" alt="{{ element.name }}">
-                      </a>
-                      <div class="caption">
-                        <p><a href="{% if element.permalink %}/item/{{ element.permalink }}{% else %}/id/{{ element.id }}{% endif %}">{{ element.name }}</a></p>
-                      </div>
-                    </div>
+                <div style="margin-top: 20px; display: none;" id="order-desc">
+                  <div id="order-desc-thanks" style="display: none; color: green;">
+                    Thank you for being interested in our service. We will analyze your requirement and reply to you soon.
                   </div>
-                {% endfor %}
+                  <div id="order-desc-form">
+                    <span>
+                      We are offering you research your competition in the whole European market.
+                      We can also research potential import / export partners for your products.
+                      Thanks to that you can be more up-to-date with trends and also possibly find a new market for your business.
+                      <br />
+                      <br />
+
+                      Please provide more details about your requirements:
+                      <br />
+
+                    </span>
+                    <form id="make-order" method="POST" action="/order">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Description</label>
+                        <textarea class="form-control" rows="3" name="body" placeholder=""></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Budget</label>
+                        <input name="budget" type="text" class="form-control" placeholder="">
+                      </div>
+                      <div class="form-group">
+                        <input name="domain" type="hidden" class="form-control" value="{{ row.domain }}">
+                      </div>
+                      <button type="submit" class="btn btn-default btn-success">Request free quote</button>
+                    </form>
+                  </div>
                 </div>
 
+
+
+
+
+
+
+
+
+
+                {% if row.wappalyzer | debug != '{}' %}
                 <hr class="clearfix" />
 
-
-                {#<div id="disqus_thread"></div>
-                <script>
-
-                /**
-                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-                /*
-                var disqus_config = function () {
-                this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                };
-                */
-                (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document, s = d.createElement('script');
-                s.src = '//test-ku4ymqzum9.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-                })();
-                </script>
-                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>#}
+                <h4>List of technologies</h4>
 
 
+                {% if not user %}
+                <a class="btn btn-default btn-success" style="width: 100%;" href="/?page=2" role="button">Login to see details</a>
+                <br />
+                <br />
+                {% else %}
 
-                {#<div style="margin-bottom: 20px;">
-                  <h4>{{ item.name }} - comments (2)</h4>
-
-
-                  <div class="media">
-                    <div class="media-left">
-                      <img alt="64x64" class="media-object" data-src="holder.js/64x64" src="/assets/images/user.jpg" data-holder-rendered="true" style="width: 50px;">
-                    </div>
-                    <div class="media-body">
+                <table class="table table-striped">
+                  <tbody>
 
 
-                      <form id="addCommentForm" action="/item/{{ id }}/comment" method="POST">
-                        <textarea name="text" class="form-control" rows="2" placeholder="Join the discussion..."></textarea>
-                        <button type="submit" class="btn btn-default pull-right">Add comment!</button>
-                      </form>
-                    </div>
-                  </div>
+                  {% if row.wappalyzer.ecommerce %}
+                  <tr>
+                    <td><b>Ecommerce</b></td>
+                    <td>
+                      {{ row.wappalyzer.ecommerce.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.video_players %}
+                  <tr>
+                    <td><b>Video players</b></td>
+                    <td>
+                      {{ row.wappalyzer.video_players.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.web_servers %}
+                  <tr>
+                    <td><b>Web servers</b></td>
+                    <td>
+                      {{ row.wappalyzer.web_servers.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.advertising_networks %}
+                  <tr>
+                    <td><b>Advertising networks</b></td>
+                    <td>
+                      {{ row.wappalyzer.advertising_networks.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.widgets %}
+                  <tr>
+                    <td><b>Widgets</b></td>
+                    <td>
+                      {{ row.wappalyzer.widgets.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.tag_managers %}
+                  <tr>
+                    <td><b>Tag managers</b></td>
+                    <td>
+                      {{ row.wappalyzer.tag_managers.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.cms %}
+                  <tr>
+                    <td><b>CMS</b></td>
+                    <td>
+                      {{ row.wappalyzer.cms.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.programming_languages %}
+                  <tr>
+                    <td><b>Programming languages</b></td>
+                    <td>
+                      {{ row.wappalyzer.programming_languages.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.miscellaneous %}
+                  <tr>
+                    <td><b>Miscellaneous</b></td>
+                    <td>
+                      {{ row.wappalyzer.miscellaneous.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.web_frameworks %}
+                  <tr>
+                    <td><b>Web frameworks</b></td>
+                    <td>
+                      {{ row.wappalyzer.web_frameworks.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.font_scripts %}
+                  <tr>
+                    <td><b>Font scripts</b></td>
+                    <td>
+                      {{ row.wappalyzer.font_scripts.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.payment_processors %}
+                  <tr>
+                    <td><b>Payment system</b></td>
+                    <td>
+                      {{ row.wappalyzer.payment_processors.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
+
+                  {% if row.wappalyzer.live_chat %}
+                  <tr>
+                    <td><b>Live chat</b></td>
+                    <td>
+                      {{ row.wappalyzer.live_chat.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
 
 
+                  {% if row.wappalyzer.hosting_panels %}
+                  <tr>
+                    <td><b>Hosting panels</b></td>
+                    <td>
+                      {{ row.wappalyzer.hosting_panels.split('|') }}
+                    </td>
+                  </tr>
+                  {% endif %}
 
-                  <div class="media">
-                    <div class="media-left">
-                      <img alt="64x64" class="media-object" src="/assets/images/user.jpg" data-holder-rendered="true" style="width: 50px;">
-                    </div>
-                    <div class="media-body">
+                  </tbody>
+                </table>
+                {% endif %}
+                {% endif %}
 
-                      <strong class="">matt</strong> test test test
+                <hr class="clearfix" />
 
-                      <br>
-                      <span class="text-muted">
-                        a few seconds ago
-                      </span>
-                    </div>
-                  </div>
+                {#<hr class="clearfix">
+                <h4>Website visits</h4>
+                <iframe id="similarweb-traffic" src="//widget.similarweb.com/traffic/{{ item.domain }}" frameborder="0" width="100%" height="200" style="border: solid 1px #D7D7D7;"></iframe>#}
 
-                  <div class="media">
-                    <div class="media-left">
-                      <img alt="64x64" class="media-object" src="/assets/images/user.jpg" data-holder-rendered="true" style="width: 50px;">
-                    </div>
-                    <div class="media-body">
+                <h4>Traffic sources</h4>
+                {% if not user %}
+                <a class="btn btn-default btn-success" style="width: 100%;" href="/?page=2" role="button">Login to see details</a>
+                <br />
+                <br />
+                {% else %}
+                <iframe id="similarweb-sources" src="//widget.similarweb.com/sources/{{ row.domain }}" frameborder="0" width="100%" height="200" style="border: solid 1px #D7D7D7;"></iframe>
+                {% endif %}
 
-                      <strong class="">mateusz</strong> test test test
-
-                      <br>
-                      <span class="text-muted">
-                        11 hours ago
-                      </span>
-                    </div>
-                  </div>
-
-                </div>#}
-
-
-
+                {% if user.is_admin %}
+                <hr class="clearfix" />
+                <a class="btn btn-default" style="width: 100%;" href="/admin/website/{{ row.domain }}" role="button">Admin</a>
+                <br />
+                <br />
+                {% endif %}
 
             </div>
           </div>
